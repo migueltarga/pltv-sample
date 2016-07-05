@@ -10,20 +10,22 @@ import android.os.Bundle;
 
 public class SplashActivity extends AppCompatActivity {
 
+    //Change the line bellow with your playlist URL
+    public static final String url = "http://cinebox.ga";
+    //Do not Change this line:
+    public static final String packageName = "me.targa.playlistvbeta";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean installed = appInstalledOrNot("me.targa.playlistvbeta");
+        boolean installed = appInstalledOrNot(packageName);
         if(installed) {
             Intent shortcutIntent = new Intent();
-            shortcutIntent.setClassName("me.targa.playlistvbeta", "me.targa.playlistvbeta.activity.CategoryActivity");
+            shortcutIntent.setClassName(packageName, packageName+".activity.CategoryActivity");
             shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            /*
-                Change the line bellow with your playlist URL
-             */
-            shortcutIntent.putExtra("url", "http://cinebox.ga");
+            shortcutIntent.putExtra("url", url);
             startActivity(shortcutIntent);
             finish();
         }else{
@@ -53,9 +55,9 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=me.targa.playlistvbeta")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+packageName)));
                 } catch (android.content.ActivityNotFoundException anfe) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=me.targa.playlistvbeta")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+packageName)));
                 }
             }
         })
